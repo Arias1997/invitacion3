@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación Especial • [Nombre del evento]</title>
+  <meta name="description" content="Invitación digital con video de fondo, botones de confirmar por WhatsApp y ver ubicación en Google Maps." />
+  <!-- Buenas prácticas para compartir en redes -->
+  <meta property="og:title" content="[Nombre del evento]" />
+  <meta property="og:description" content="¡Estás invitado! [Fecha] • [Lugar]" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="poster.jpg" />
+  <style>
+    :root{
+      /* --bg-overlay: rgba(0, 0, 0, 0.008); */
+      --accent: #d4af37; /* dorado */
+      --accent-2: #0b3d2ed7; /* verde botella oscuro */
+      --text-dark: #073e07bb;
+      --text-light: #ffffff79;
+    }
+    *{box-sizing:border-box}
+    html,body{height:90%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text-light); background:#00000042;
+    }
+    /* Contenedor del video de fondo */
+    .hero{
+      position:relative; min-height:100dvh; width:100%; overflow:hidden;
+    }
+    .hero::after{ /* oscurecer para legibilidad */
+      content:""; position:absolute; inset:0; background:var(--bg-overlay); z-index:1;
+    }
+    .hero video{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    }
+
+    /* Contenido encima del video */
+    .content{
+      position:relative; z-index:2; display:grid; place-items:center; min-height:100dvh; padding: clamp(16px, 3vw, 40px);
+    }
+    .card{
+        align-items: center;
+        justify-content: center;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      background: none; /* Transparente */; color:var(--text-dark);
+      width:min(720px, 100%);
+      border-radius:24px; padding: clamp(20px, 4vw, 40px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.35);
+    }
+    .badge{
+      display:inline-block; font-weight:600; text-transform:uppercase; letter-spacing:.12em;
+      border:1px solid var(--accent); color:var(--accent-2);
+      background:linear-gradient(180deg, #fff8e1, #f6e6a7);
+      border-radius:999px; padding:6px 12px; font-size:.8rem; margin-bottom:12px;
+    }
+    h1{
+      font-size:clamp(1.8rem, 4vw, 3rem); margin:.2em 0 .4em; color:rgb(255, 213, 0); text-shadow: 1px 1px 3px rgb(7, 70, 4);
+    }
+    .date{font-size:clamp(1rem, 2.2vw, 1.25rem); font-weight:600; color:#2f3e3a}
+    .verse{margin: 14px 0; font-style:italic; line-height:1.55}
+
+    .divider{height:1px; background:linear-gradient(90deg, transparent, rgba(0,0,0,.15), transparent); margin:18px 0}
+
+    .grid{
+        width: 250px;
+        height: auto;
+        justify-content: center;
+      display:grid; gap:16px; grid-template-columns:1fr; margin-top:10px; 
+    }
+    @media (min-width:720px){
+      .grid{ grid-template-columns: 1fr 1fr; width: 100vh; height: auto; }
+    }
+
+    .info{
+      background:#ffffff00; border-radius:16px; padding:16px; border:1px solid rgba(252, 215, 2, 0.577);
+    }
+    .info strong{ color:#0b3d2e }
+
+    .actions{
+        align-items: center;
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:18px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      text-decoration:none; font-weight:700; border-radius:14px; padding:12px 18px;
+      border:2px solid transparent; transition:.2s transform ease, .2s box-shadow ease;
+      user-select:none; -webkit-tap-highlight-color:transparent;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.15); }
+    .btn:active{ transform: translateY(0); }
+    .btn-primary{ background:var(--accent-2); color:#fff; }
+    .btn-outline{ background:#fff; border-color:var(--accent-2); color:var(--accent-2) }
+
+    /* Pie */
+    footer{ text-align:center; font-size:.9rem; color:#dfe8e6; padding:18px; }
+
+    /* Botón de sonido (opcional) */
+    .sound{
+      position:fixed; right:14px; bottom:14px; z-index:3;
+      background:rgba(255, 255, 255, 0.676); border:1px solid rgba(0,0,0,.1); color:#0b3d2e;
+      border-radius:999px; padding:10px 14px; font-weight:700; cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="hero" aria-label="Invitación con video de fondo">
+    <!-- Video de fondo: usa WEBM + MP4 para mayor compatibilidad. Mantén el archivo pequeño (<20–30 MB) -->
+    <video id="bgVideo" autoplay muted loop playsinline preload="metadata" poster="poster.jpg">
+      <!-- Reemplaza las rutas por tus archivos -->
+      <source src="invitacion2.webm" type="video/webm" />
+      <source src="invitacion2.mp4" type="video/mp4" />
+      Tu navegador no soporta video HTML5.
+    </video>
+
+    <div class="content">
+      <section class="card" role="region" aria-labelledby="titulo">
+        <span class="badge">Invitación especial</span>
+        <h1 id="titulo">[Jeidy Arias / Mis 15]</h1>
+        <p class="date">[Viernes 30 de agosto, 19:00]</p>
+        <p class="verse">“["Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida."Proverbios 4:23]” — [63607213]</p>
+        <div class="divider"></div>
+
+        <div class="grid" aria-label="Detalles del evento">
+          <div class="info">
+            <strong>Lugar</strong>
+            <p>[Salón de eventos la Pascana / Dirección Av. Villazon km 3.8]</p>
+          </div>
+          <div class="info">
+            <strong>aufit</strong>
+            <p>[Opcional: Elegante, verde botella y dorado]</p>
+          </div>
+        </div>
+
+        <div class="actions" aria-label="Acciones">
+          <!-- WhatsApp: reemplaza 59163607213 y personaliza el texto -->
+          <a class="btn btn-primary" target="_blank" rel="noopener" 
+             href="https://wa.me/59163607213?text=Hola%2C%20confirmo%20mi%20asistencia%20al%20evento%20de%20%5BNombre%5D%20el%2030%20de%20agosto%20a%20las%2019%3A00.">
+            Confirmar WhatsApp
+          </a>
+          <!-- Google Maps: pega aquí tu enlace de ubicación exacta -->
+          <a class="btn btn-outline" target="_blank" rel="noopener" 
+             href="https://maps.app.goo.gl/bk1kJBksxQz3PcRR8">
+             Ubicación
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <button id="soundBtn" class="sound" aria-pressed="false" aria-label="Activar/Desactivar sonido">🔈 Sonido</button>
+
+  <footer>
+    Si no puedes ver el video, revisa tu conexión o abre el enlace desde el navegador.
+  </footer>
+
+  <script>
+    // Botón para activar/desactivar sonido (los móviles sólo permiten sonido tras interacción del usuario)
+    const bgVideo = document.getElementById('bgVideo');
+    const soundBtn = document.getElementById('soundBtn');
+
+    function updateLabel(){
+      const muted = bgVideo.muted || bgVideo.volume === 0;
+      soundBtn.textContent = muted ? '🔈 Sonido' : '🔇 Silenciar';
+      soundBtn.setAttribute('aria-pressed', (!muted).toString());
+    }
+
+    soundBtn.addEventListener('click', async () => {
+      try{
+        if (bgVideo.muted) {
+          bgVideo.muted = false;
+          // En algunos navegadores es necesario llamar a play() tras cambiar mute
+          await bgVideo.play();
+        } else {
+          bgVideo.muted = true;
+        }
+      }catch(e){
+        console.warn('No se pudo cambiar el sonido automáticamente:', e);
+      }finally{
+        updateLabel();
+      }
+    });
+
+    // Asegura estado inicial correcto del botón
+    updateLabel();
+  </script>
+</body>
+</html>
